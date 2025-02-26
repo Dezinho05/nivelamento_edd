@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <math.h>
+#include <ctype.h>
 
-float result;
 float funA(int repeat){
+    float result = 0.0;
     while(repeat > 0) {
         result += (repeat + (repeat-1))/ pow(repeat, 2);
         repeat--;
@@ -10,53 +11,65 @@ float funA(int repeat){
     return result;
 };
 float funB(int repeat){
+    float result = 0.0;
     do{
-        
+        result += (pow(repeat, 3)/pow(10, repeat-1));
         repeat--;
     }while(repeat > 0);
 
     return result;
 };
 float funC(int repeat){
+    float result = 0.0;
     for(; repeat > 0; repeat--){
-
+        result += repeat/(3 * (repeat * 2));
     }
     return result;
 };
 
-int main(void) {
-    
+int Repeat(int repeat){
+    printf("Insira a quantidade de termos que deseja calcular");
+    do{
+        scanf("%i", repeat);
+        if(repeat < 1){
+            printf("Invalido. Insira um valor positivo:");
+        };
+    }while(repeat < 1);
+    return repeat;
+}
+
+void menu(){
+    setbuf(stdout, NULL);
     char opt;
+    printf("Digite a opção deseja\n 'A'\n 'B'\n 'C'\n 'D'(para sair).");
+    scanf("%c", opt);
 
-    // printf("Seleciona a opcao desejada: A, B, C, ou D (para sair)!");
-    // do {
-    //     printf("Qual opcao deseja?");
-    //     scanf("%c", opcao);
-    //     if (opcao != 'A' && opcao != 'B' && opcao != 'C' && opcao != 'D') {
-    //         printf("Opcao invalida, selecione uma das opcoes disponiveis.");
-    //     }else{
-    //         do{
-    //             printf("Seleciona a quantidade de termos que deseja soma (positiva e inteira):");
-    //             scanf("%i", qtdTermo);
-    //             if(qtdTermo <= 0) {
-    //                 printf("Invalido!\nTente novamente.");
-    //             }
-    //         }while(qtdTermo <= 0);
-    //     };
-    // }while(opcao != 'A' && opcao != 'B' && opcao != 'C' && opcao != 'D');
-    // if (opcao == 'A'){
-    //     int opcaoA;
-    //     while(qtdTermo > 0){
-    //         opcaoA = ((n+1) + n)/n;
-    //     };
-    //     printf("Somatorio da opcao A: %i\n", opcaoA);
-    // }else if(opcao == 'B'){
-    //     int opcaoB;
-    //     do{
-    //         opcaoB = ((n+1) + n)/n;
-    //     }while(qtdTermo > 0);
-    //     printf("Somatorio da opcao A: %i\n", opcaoB);
-    // };
+    switch(toupper(opt)){
+        case 'A':
+            printf("Resultado: %0.2f\n\n", funA(Repeat()));
+            menu();
+            break;
+        case 'B':
+            printf("Resultado: %0.2f\n\n", funB(Repeat()));
+            menu();
+    
+            break;
+        case 'C':
+            printf("Resultado: %0.2f\n\n", funC(Repeat()));
+            menu();
+            break;
+        case 'D':
+            printf("--Finalizado--");
+            break;
+    
+        default:
+            printf("\Insira uma opcao valida.\n");
+            menu();
+            break;
+}
 
+int main(void) {
+    menu();
+  
     return 0;
 }
